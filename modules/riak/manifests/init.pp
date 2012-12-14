@@ -3,13 +3,13 @@ class riak {
         $site="",
         $cwd="",
         $creates="",
-        $user="") {                                                                                         
+        $user="") {
 
-    exec { $name:                                                                                                                    
-        command => "/usr/bin/wget --content-disposition ${site}/${name}",                                                         
+    exec { $name:
+        command => "/usr/bin/wget --content-disposition ${site}/${name}",
         cwd => $cwd,
-        creates => "${cwd}/${creates}",                                                              
-        user => $user,                                                                                                        
+        creates => "${cwd}/${creates}",
+        user => $user,
     }
   }
 
@@ -20,7 +20,7 @@ class riak {
     user => "vagrant"
   }
 
-  exec { "install": 
+  exec { "install":
     command => "/usr/bin/dpkg --install /tmp/riak_1.2.1-1_amd64.deb"
   }
 
@@ -53,6 +53,6 @@ class riak {
   package {"libssl0.9.8":
     ensure => present
   }
-  
+
   Download["riak/CURRENT/debian/6/riak_1.2.1-1_amd64.deb"] -> Package["libssl0.9.8"] -> Exec["install"] -> Service["riak"]
 }
